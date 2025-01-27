@@ -53,6 +53,10 @@ local function create_note()
     vim.cmd("write")
 end
 
+--　ハイライト消去
+vim.api.nvim_set_keymap('n', '<Leader>l', ':nohlsearch<CR>', { noremap = true, silent = true })
+
+
 -- NvimTree ショートカット
 vim.keymap.set('n', '<C-e>', ':NvimTreeToggle<CR>', {
     noremap = true,
