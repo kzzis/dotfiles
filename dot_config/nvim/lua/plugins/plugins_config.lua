@@ -186,7 +186,26 @@ return { -- lazy.nvim をプラグイン管理に使用
             update_in_insert = true,
             severity_sort = true
         })
+        local diagnostic_timer = nil
 
+        local function show_diagnostics()
+            if diagnostic_timer then
+                vim.fn.timer_stop(diagnostic_timer) -- 既存のタイマーを停止
+            end
+            diagnostic_timer = vim.fn.timer_start(1000, function() -- 1000msごとに診断を表示
+                vim.diagnostic.open_float(nil, {
+                    focusable = false
+                })
+            end, {
+                ['repeat'] = -1
+            }) -- 無限ループ
+        end
+
+        vim.api.nvim_create_autocmd({"BufEnter", "InsertLeave", "TextChanged"}, {
+            callback = function()
+                show_diagnostics()
+            end
+        })
         -- ts_ls（旧tsserver）の設定
         lspconfig.ts_ls.setup({
             on_attach = on_attach,
@@ -214,8 +233,10 @@ return { -- lazy.nvim をプラグイン管理に使用
                     vim.api.nvim_create_autocmd("BufWritePre", {
                         buffer = bufnr,
                         callback = function()
-                            vim.lsp.buf.format({ async = false })
-                        end,
+                            vim.lsp.buf.format({
+                                async = false
+                            })
+                        end
                     })
                 end
             end,
@@ -226,10 +247,10 @@ return { -- lazy.nvim をプラグイン管理に使用
                     completeUnimported = true, -- 未インポートのパッケージを補完
                     analyses = {
                         unusedparams = true, -- 未使用のパラメータを警告
-                        shadow = true, -- 変数のシャドウイングを警告
-                    },
-                },
-            },
+                        shadow = true -- 変数のシャドウイングを警告
+                    }
+                }
+            }
         })
     end
 }, -- null-ls: Prettierをフォーマッターとして設定
@@ -279,7 +300,8 @@ return { -- lazy.nvim をプラグイン管理に使用
                 ["<C-Space>"] = cmp.mapping.complete(),
                 ["<C-e>"] = cmp.mapping.abort(),
                 ["<CR>"] = cmp.mapping.confirm({
-                    select = true
+                    behavior = cmp.ConfirmBehavior.Replace, -- 修正: 補完確定時に既存の単語を置き換える
+                    select = false -- 修正: 確定時に現在の選択を保持しない
                 }),
                 ["<Tab>"] = cmp.mapping(function(fallback)
                     if cmp.visible() then
@@ -319,7 +341,8 @@ return { -- lazy.nvim をプラグイン管理に使用
     event = "InsertEnter",
     config = function()
         require("nvim-autopairs").setup({
-            check_ts = true -- Treesitterを使って括弧の補完を高度化
+            check_ts = true, -- Treesitterを使って括弧の補完を高度化
+            map_cr = false,
         })
     end
 }, {
@@ -511,6 +534,28 @@ return { -- lazy.nvim をプラグイン管理に使用
                     }
                 }
             }
+        })
+    end
+}, {
+    "rcarriga/nvim-notify",
+    config = function()
+        local notify = require("notify")
+        vim.notify = notify
+
+        -- LSPの診断メッセージも nvim-notify で表示する
+        require("lspconfig.ui.windows").default_options.border = "rounded"
+
+        vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+            border = "rounded"
+        })
+        vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+            border = "rounded"
+        })
+
+        vim.diagnostic.config({
+            virtual_text = true, -- バーチャルテキストを表示
+            signs = true, -- サインカラム（左側のEやWアイコン）を有効化
+            underline = true -- エラーのある行を下線でマーク
         })
     end
 }}
