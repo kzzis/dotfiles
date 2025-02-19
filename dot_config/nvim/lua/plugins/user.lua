@@ -1,5 +1,3 @@
-if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
-
 -- You can also add or configure plugins by creating files in this `plugins/` folder
 -- Here are some examples:
 
@@ -23,11 +21,6 @@ return {
     opts = function(_, opts)
       -- customize the dashboard header
       opts.section.header.val = {
-        " █████  ███████ ████████ ██████   ██████",
-        "██   ██ ██         ██    ██   ██ ██    ██",
-        "███████ ███████    ██    ██████  ██    ██",
-        "██   ██      ██    ██    ██   ██ ██    ██",
-        "██   ██ ███████    ██    ██   ██  ██████",
         " ",
         "    ███    ██ ██    ██ ██ ███    ███",
         "    ████   ██ ██    ██ ██ ████  ████",
@@ -88,7 +81,17 @@ return {
       require("Comment").setup()
     end
   },
+
+  -- key binds
   vim.api.nvim_set_keymap('n', '<D-/>', 'gcc', { noremap = false, silent = true }),
-  vim.api.nvim_set_keymap('v', '<D-/>', 'gc', { noremap = false, silent = true })
+  vim.api.nvim_set_keymap('v', '<D-/>', 'gc', { noremap = false, silent = true }),
+  vim.keymap.set("n", "dd", '"_dd', { noremap = true, silent = true }),
+  vim.keymap.set("n", "x", '"_x', { noremap = true, silent = true }),
+  vim.keymap.set("n", "<A-Up>", ":m-2<CR>==", { noremap = true, silent = true }),
+  vim.keymap.set("n", "<A-Down>", ":m+1<CR>==", { noremap = true, silent = true }),
+  vim.keymap.set("v", "<A-Up>", ":m '<-2<CR>gv=gv", { noremap = true, silent = true }),
+  vim.keymap.set("v", "<A-Down>", ":m '>+1<CR>gv=gv", { noremap = true, silent = true }),
+  vim.keymap.set("n", "<S-A-Down>", "yyp", { noremap = true, silent = true }),
+  vim.keymap.set("v", "<S-A-Down>", "y'>p", { noremap = true, silent = true })
 
 }
