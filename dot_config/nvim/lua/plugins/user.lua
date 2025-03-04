@@ -21,7 +21,6 @@ return {
     opts = function(_, opts)
       -- customize the dashboard header
       opts.section.header.val = {
-        " ",
         "    ███    ██ ██    ██ ██ ███    ███",
         "    ████   ██ ██    ██ ██ ████  ████",
         "    ██ ██  ██ ██    ██ ██ ██ ████ ██",
@@ -116,16 +115,49 @@ return {
     }
   },
   
-  -- key binds
-  vim.api.nvim_set_keymap('n', '<D-/>', 'gcc', { noremap = false, silent = true }),
-  vim.api.nvim_set_keymap('v', '<D-/>', 'gc', { noremap = false, silent = true }),
-  vim.keymap.set("n", "dd", '"_dd', { noremap = true, silent = true }),
-  vim.keymap.set("n", "x", '"_x', { noremap = true, silent = true }),
-  vim.keymap.set("n", "<A-Up>", ":m-2<CR>==", { noremap = true, silent = true }),
-  vim.keymap.set("n", "<A-Down>", ":m+1<CR>==", { noremap = true, silent = true }),
-  vim.keymap.set("v", "<A-Up>", ":m '<-2<CR>gv=gv", { noremap = true, silent = true }),
-  vim.keymap.set("v", "<A-Down>", ":m '>+1<CR>gv=gv", { noremap = true, silent = true }),
-  vim.keymap.set("n", "<S-A-Down>", "yyp", { noremap = true, silent = true }),
-  vim.keymap.set("v", "<S-A-Down>", "y'>p", { noremap = true, silent = true })
+-- ============================
+-- Keybind Settings for Neovim
+-- ============================
+
+-- コメントのトグル（<D-/> は macOS の Command+/）
+vim.api.nvim_set_keymap('n', '<D-/>', 'gcc', { noremap = false, silent = true }), -- ノーマルモード: コメントトグル
+vim.api.nvim_set_keymap('v', '<D-/>', 'gc', { noremap = false, silent = true }),  -- ビジュアルモード: 選択範囲のコメントトグル
+
+-- ============================
+-- 削除系のキーマップ
+-- ============================
+
+-- ノーマルモード: "dd" で削除時にヤンクしない（レジスタに影響を与えない）
+vim.keymap.set("n", "dd", '"_dd', { noremap = true, silent = true }),
+
+-- ノーマルモード: "x" で削除時にヤンクしない
+vim.keymap.set("n", "x", '"_x', { noremap = true, silent = true }),
+
+-- ============================
+-- 行の移動
+-- ============================
+
+-- ノーマルモード: 現在の行を上へ移動
+vim.keymap.set("n", "<A-Up>", ":m-2<CR>==", { noremap = true, silent = true }),
+
+-- ノーマルモード: 現在の行を下へ移動
+vim.keymap.set("n", "<A-Down>", ":m+1<CR>==", { noremap = true, silent = true }),
+
+-- ビジュアルモード: 選択範囲を上へ移動
+vim.keymap.set("v", "<A-Up>", ":m '<-2<CR>gv=gv", { noremap = true, silent = true }),
+
+-- ビジュアルモード: 選択範囲を下へ移動
+vim.keymap.set("v", "<A-Down>", ":m '>+1<CR>gv=gv", { noremap = true, silent = true }),
+
+-- ============================
+-- 行のコピー（複製）
+-- ============================
+
+-- ノーマルモード: 現在の行を下に複製
+vim.keymap.set("n", "<S-A-Down>", "yyp", { noremap = true, silent = true }),
+
+-- ビジュアルモード: 選択範囲を下にコピー（最下部に移動しないように調整）
+vim.keymap.set("v", "<S-A-Down>", "ygv<Esc>p", { noremap = true, silent = true }),
+
 
 }
