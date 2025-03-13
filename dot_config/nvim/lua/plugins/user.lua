@@ -114,6 +114,22 @@ return {
       }
     }
   },
+-- 置換ライブラリ
+  {
+    "nvim-pack/nvim-spectre",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function()
+      require("spectre").setup({
+        -- デフォルト設定、カスタマイズ可能
+        default = {
+          replace = {
+            cmd = "sed"
+          }
+        }
+      })
+    end
+  },
+
   
 -- ============================
 -- Keybind Settings for Neovim

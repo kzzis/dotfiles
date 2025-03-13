@@ -45,7 +45,9 @@ return {
       -- first key is the mode
       n = {
         -- second key is the lefthand side of the map
-
+        ["<Leader>r"] = { "<cmd>lua require('spectre').toggle()<CR>", desc = "Toggle Spectre" },
+        ["<Leader>rw"] = { "<cmd>lua require('spectre').open_visual({select_word=true})<CR>", desc = "Search current word" },
+        ["<Leader>rp"] = { "<cmd>lua require('spectre').open_file_search({select_word=true})<CR>", desc = "Search on current file" },
         -- navigate buffer tabs
         ["]b"] = { function() require("astrocore.buffer").nav(vim.v.count1) end, desc = "Next buffer" },
         ["[b"] = { function() require("astrocore.buffer").nav(-vim.v.count1) end, desc = "Previous buffer" },
