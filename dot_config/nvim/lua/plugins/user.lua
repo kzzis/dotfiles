@@ -160,4 +160,15 @@ vim.keymap.set("n", "<S-A-Down>", "yyp", { noremap = true, silent = true }),
 vim.keymap.set("v", "<S-A-Down>", "ygv<Esc>p", { noremap = true, silent = true }),
 
 
+-- 全角スペースを赤背景で強調
+vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
+  pattern = "*",
+  callback = function()
+    -- ハイライト設定
+    vim.cmd([[highlight ZenkakuSpace ctermbg=red guibg=red]])
+    -- 全角スペースをマッチ
+    vim.cmd([[match ZenkakuSpace /　/]])
+  end,
+})
+
 }
