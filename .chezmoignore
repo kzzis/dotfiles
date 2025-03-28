@@ -1,0 +1,25 @@
+# Karabiner: 自動バックアップ・アセットなど
+.config/karabiner/automatic_backups
+.config/karabiner/assets
+
+# Neovim: キャッシュや履歴系
+.local/share/nvim/
+.cache/nvim/
+.state/nvim/
+.config/nvim/undo/
+.config/nvim/backup/
+.config/nvim/swap/
+
+# VSCode: 拡張機能やキャッシュ
+Library/Application Support/Code/
+Library/Caches/com.microsoft.VSCode/
+
+# Raycast: キャッシュや個人データ
+.config/raycast/
+
+# macOS固有ファイル
+.DS_Store
+
+# ゴミ箱・一時ファイル
+.Trash/w
+tmp/
