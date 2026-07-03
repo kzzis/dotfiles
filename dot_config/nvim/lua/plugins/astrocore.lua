@@ -68,6 +68,16 @@ return {
         ["<A-Down>"] = { ":m '>+1<CR>gv=gv", desc = "Move selection down" },
         ["<S-A-Down>"] = { "ygv<Esc>p", desc = "Duplicate selection down" },
       },
+      t = {
+        ["<Esc><Esc>"] = {
+          function()
+            -- only close if the current terminal window is floating, so a normal
+            -- Esc still reaches interactive programs (fzf, nested nvim, etc.)
+            if vim.api.nvim_win_get_config(0).zindex then vim.cmd.close() end
+          end,
+          desc = "Close floating terminal",
+        },
+      },
     },
   },
 }
