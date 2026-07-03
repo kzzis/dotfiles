@@ -25,6 +25,7 @@ Library/Caches/com.microsoft.VSCode/
 
 # macOS固有ファイル
 .DS_Store
+**/.DS_Store
 
 # ゴミ箱・一時ファイル
 .Trash/w
