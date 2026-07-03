@@ -18,7 +18,7 @@ return {
       "MaximilianLloyd/ascii.nvim",
     },
     opts = function(_, opts)
-      opts.section.header.val = require("ascii").art.text.neovim.sharp
+      opts.section.header.val = require("ascii").art.text.neovim.default1
 
       local get_icon = require("astroui").get_icon
       table.insert(opts.section.buttons.val, opts.button("LDR e", get_icon("FolderOpen", 2, true) .. "Files (oil)  "))
