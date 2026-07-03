@@ -1,89 +1,57 @@
--- You can also add or configure plugins by creating files in this `plugins/` folder
--- Here are some examples:
-
 ---@type LazySpec
 return {
-
-  -- == Examples of Adding Plugins ==
-
-  "andweeb/presence.nvim",
   {
     "ray-x/lsp_signature.nvim",
     event = "BufRead",
     config = function() require("lsp_signature").setup() end,
   },
 
-  -- == Examples of Overriding Plugins ==
+  {
+    "rcarriga/nvim-notify",
+    opts = { background_colour = "#1e1e2e" },
+  },
 
-  -- customize alpha options
   {
     "goolord/alpha-nvim",
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "MaximilianLloyd/ascii.nvim",
+    },
     opts = function(_, opts)
-      -- customize the dashboard header
-      opts.section.header.val = {
-        "    ███    ██ ██    ██ ██ ███    ███",
-        "    ████   ██ ██    ██ ██ ████  ████",
-        "    ██ ██  ██ ██    ██ ██ ██ ████ ██",
-        "    ██  ██ ██  ██  ██  ██ ██  ██  ██",
-        "    ██   ████   ████   ██ ██      ██",
-      }
+      opts.section.header.val = require("ascii").art.text.neovim.sharp
       return opts
     end,
   },
 
-  -- You can disable default plugins as follows:
-  { "max397574/better-escape.nvim", enabled = false },
-
-  -- You can also easily customize additional setup of plugins that is outside of the plugin's setup call
   {
     "L3MON4D3/LuaSnip",
     config = function(plugin, opts)
-      require "astronvim.plugins.configs.luasnip"(plugin, opts) -- include the default astronvim config that calls the setup call
-      -- add more custom luasnip configuration such as filetype extend or custom snippets
-      local luasnip = require "luasnip"
-      luasnip.filetype_extend("javascript", { "javascriptreact" })
+      require "astronvim.plugins.configs.luasnip"(plugin, opts)
+      require("luasnip").filetype_extend("javascript", { "javascriptreact" })
     end,
   },
 
   {
     "windwp/nvim-autopairs",
     config = function(plugin, opts)
-      require "astronvim.plugins.configs.nvim-autopairs"(plugin, opts) -- include the default astronvim config that calls the setup call
-      -- add more custom autopairs configuration such as custom rules
-      local npairs = require "nvim-autopairs"
-      local Rule = require "nvim-autopairs.rule"
-      local cond = require "nvim-autopairs.conds"
-      npairs.add_rules(
-        {
-          Rule("$", "$", { "tex", "latex" })
-            -- don't add a pair if the next character is %
-            :with_pair(cond.not_after_regex "%%")
-            -- don't add a pair if  the previous character is xxx
-            :with_pair(
-              cond.not_before_regex("xxx", 3)
-            )
-            -- don't move right when repeat character
-            :with_move(cond.none())
-            -- don't delete if the next character is xx
-            :with_del(cond.not_after_regex "xx")
-            -- disable adding a newline when you press <cr>
-            :with_cr(cond.none()),
-        },
-        -- disable for .vim files, but it work for another filetypes
-        Rule("a", "a", "-vim")
-      )
+      require "astronvim.plugins.configs.nvim-autopairs"(plugin, opts)
     end,
   },
+
   {
     "numToStr/Comment.nvim",
-    config = function()
-      require("Comment").setup()
-    end
+    config = function() require("Comment").setup() end,
   },
+
+  {
+    "esmuellert/codediff.nvim",
+    config = function() require("codediff").setup() end,
+  },
+
   {
     "onsails/lspkind.nvim",
     opts = {
-      mode = "symbol_text", -- "text", "symbol", "symbol_text"
+      mode = "symbol_text",
       preset = "codicons",
       symbol_map = {
         Text = "📝",
@@ -110,65 +78,8 @@ return {
         Struct = "🏗",
         Event = "🎉",
         Operator = "➕",
-        TypeParameter = "📌"
-      }
-    }
+        TypeParameter = "📌",
+      },
+    },
   },
-  
--- ============================
--- Keybind Settings for Neovim
--- ============================
-
--- コメントのトグル（<D-/> は macOS の Command+/）
-vim.api.nvim_set_keymap('n', '<D-/>', 'gcc', { noremap = false, silent = true }), -- ノーマルモード: コメントトグル
-vim.api.nvim_set_keymap('v', '<D-/>', 'gc', { noremap = false, silent = true }),  -- ビジュアルモード: 選択範囲のコメントトグル
-
--- ============================
--- 削除系のキーマップ
--- ============================
-
--- ノーマルモード: "dd" で削除時にヤンクしない（レジスタに影響を与えない）
-vim.keymap.set("n", "dd", '"_dd', { noremap = true, silent = true }),
-
--- ノーマルモード: "x" で削除時にヤンクしない
-vim.keymap.set("n", "x", '"_x', { noremap = true, silent = true }),
-
--- ============================
--- 行の移動
--- ============================
-
--- ノーマルモード: 現在の行を上へ移動
-vim.keymap.set("n", "<A-Up>", ":m-2<CR>==", { noremap = true, silent = true }),
-
--- ノーマルモード: 現在の行を下へ移動
-vim.keymap.set("n", "<A-Down>", ":m+1<CR>==", { noremap = true, silent = true }),
-
--- ビジュアルモード: 選択範囲を上へ移動
-vim.keymap.set("v", "<A-Up>", ":m '<-2<CR>gv=gv", { noremap = true, silent = true }),
-
--- ビジュアルモード: 選択範囲を下へ移動
-vim.keymap.set("v", "<A-Down>", ":m '>+1<CR>gv=gv", { noremap = true, silent = true }),
-
--- ============================
--- 行のコピー（複製）
--- ============================
-
--- ノーマルモード: 現在の行を下に複製
-vim.keymap.set("n", "<S-A-Down>", "yyp", { noremap = true, silent = true }),
-
--- ビジュアルモード: 選択範囲を下にコピー（最下部に移動しないように調整）
-vim.keymap.set("v", "<S-A-Down>", "ygv<Esc>p", { noremap = true, silent = true }),
-
-
--- 全角スペースを赤背景で強調
-vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
-  pattern = "*",
-  callback = function()
-    -- ハイライト設定
-    vim.cmd([[highlight ZenkakuSpace ctermbg=red guibg=red]])
-    -- 全角スペースをマッチ
-    vim.cmd([[match ZenkakuSpace /　/]])
-  end,
-})
-
 }

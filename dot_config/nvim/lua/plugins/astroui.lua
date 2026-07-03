@@ -11,13 +11,13 @@ return {
   ---@type AstroUIOpts
   opts = {
     -- change colorscheme
-    colorscheme = "gruvbox",
+    colorscheme = "catppuccin",
     -- AstroUI allows you to easily modify highlight groups easily for any and all colorschemes
     highlights = {
       init = { -- this table overrides highlights in all themes
         -- Normal = { bg = "#000000" },
       },
-      gruvbox = { -- a table of overrides/changes when applying the astrotheme theme
+      catppuccin = { -- a table of overrides/changes when applying the catppuccin theme
         -- Normal = { bg = "#000000" },
       },
     },

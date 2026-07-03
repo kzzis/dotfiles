@@ -226,6 +226,7 @@
                 ]
             },
             "name": "Default profile",
+            "selected": true,
             "virtual_hid_keyboard": { "keyboard_type_v2": "jis" }
         },
         {
@@ -258,6 +259,7 @@
                     },
                     {
                         "description": "［ JIS ］英数・かな キーを、他のキーと組み合わせて押したときは コマンドキー（⌘）として扱う",
+                        "enabled": false,
                         "manipulators": [
                             {
                                 "description": " EISUU → LEFT COMMAND ",
@@ -416,7 +418,6 @@
                 ]
             },
             "name": "HHKB",
-            "selected": true,
             "virtual_hid_keyboard": { "keyboard_type_v2": "ansi" }
         }
     ]

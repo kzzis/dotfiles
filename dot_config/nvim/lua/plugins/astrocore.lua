@@ -12,7 +12,7 @@ return {
   opts = {
     -- Configure core features of AstroNvim
     features = {
-      large_buf = { size = 1024 * 256, lines = 10000 }, -- set global limits for large files for disabling features like treesitter
+      large_buf = { size = 1024 * 256, lines = 10000, notify = false }, -- set global limits for large files for disabling features like treesitter
       autopairs = true, -- enable autopairs at start
       cmp = true, -- enable completion at start
       diagnostics_mode = 3, -- diagnostic mode on start (0 = off, 1 = no signs/virtual text, 2 = no virtual text, 3 = on)
@@ -42,15 +42,9 @@ return {
     -- Mappings can be configured through AstroCore as well.
     -- NOTE: keycodes follow the casing in the vimdocs. For example, `<Leader>` must be capitalized
     mappings = {
-      -- first key is the mode
       n = {
-        -- second key is the lefthand side of the map
-
-        -- navigate buffer tabs
         ["]b"] = { function() require("astrocore.buffer").nav(vim.v.count1) end, desc = "Next buffer" },
         ["[b"] = { function() require("astrocore.buffer").nav(-vim.v.count1) end, desc = "Previous buffer" },
-
-        -- mappings seen under group name "Buffer"
         ["<Leader>bd"] = {
           function()
             require("astroui.status.heirline").buffer_picker(
@@ -59,13 +53,18 @@ return {
           end,
           desc = "Close buffer from tabline",
         },
-
-        -- tables with just a `desc` key will be registered with which-key if it's installed
-        -- this is useful for naming menus
-        -- ["<Leader>b"] = { desc = "Buffers" },
-
-        -- setting a mapping to false will disable it
-        -- ["<C-S>"] = false,
+        ["<D-/>"] = { "gcc", desc = "Toggle comment", remap = true },
+        ["dd"] = { '"_dd', desc = "Delete line (no yank)" },
+        ["x"] = { '"_x', desc = "Delete char (no yank)" },
+        ["<A-Up>"] = { ":m-2<CR>==", desc = "Move line up" },
+        ["<A-Down>"] = { ":m+1<CR>==", desc = "Move line down" },
+        ["<S-A-Down>"] = { "yyp", desc = "Duplicate line down" },
+      },
+      v = {
+        ["<D-/>"] = { "gc", desc = "Toggle comment", remap = true },
+        ["<A-Up>"] = { ":m '<-2<CR>gv=gv", desc = "Move selection up" },
+        ["<A-Down>"] = { ":m '>+1<CR>gv=gv", desc = "Move selection down" },
+        ["<S-A-Down>"] = { "ygv<Esc>p", desc = "Duplicate selection down" },
       },
     },
   },

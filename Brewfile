@@ -9,7 +9,6 @@ cask "appcleaner"
 cask "docker"
 cask "deepl"
 cask "1password"
-cask "sourcetree"
 
 # brew
 brew "chezmoi"
@@ -26,5 +25,3 @@ brew "tree"
 brew "jq"
 brew "gh"
 brew "fd"
-brew "pandoc"
-brew "git-delta"
