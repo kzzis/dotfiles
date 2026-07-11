@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.k.karabiner-hhkb-switch</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/zsh</string>
+        <string>/Users/k/.config/karabiner-hhkb-switch/karabiner-hhkb-switch.sh</string>
+    </array>
+    <key>StartInterval</key>
+    <integer>15</integer>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>StandardOutPath</key>
+    <string>/Users/k/Library/Logs/karabiner-hhkb-switch.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/k/Library/Logs/karabiner-hhkb-switch.log</string>
+</dict>
+</plist>
