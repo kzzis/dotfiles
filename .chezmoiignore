@@ -3,6 +3,8 @@
 # Karabiner: 自動バックアップ・アセットなど
 .config/karabiner/automatic_backups
 .config/karabiner/assets
+# karabiner.json: selectedプロファイルがHHKB接続で自動書き換わるため管理対象外
+.config/karabiner/karabiner.json
 
 # Neovim: キャッシュや履歴系
 .local/share/nvim/
